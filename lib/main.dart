@@ -28,7 +28,12 @@ class MyApp extends StatelessWidget {
 }
 
 class MyAppState extends ChangeNotifier {
-  final current = WordPair.random(); //MyAppState가 가진 변수들는 상태 관리를 받게 됩니다
+  WordPair current = WordPair.random(); //MyAppState가 가진 변수들는 상태 관리를 받게 됩니다
+
+  void getNext() {
+    current = WordPair.random(); //새로운 랜덤단어 한 쌍을 만듭니다
+    notifyListeners(); //MyApp에게 알림을 보내는 역할을 합니다
+  }
 }
 
 class MyHomePage extends StatelessWidget {
@@ -41,8 +46,15 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const Text('A Random Idea:'),
-          Text(appState.current.asLowerCase)
+          const Text('A Random AWESOME Idea:'),
+          Text(appState.current.asLowerCase),
+          ElevatedButton(
+            onPressed: () {
+              debugPrint('button pressed!');
+              appState.getNext();
+            },
+            child: const Text('Next'),
+          )
         ],
       ),
     );
