@@ -43,19 +43,56 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final appState =
         context.watch<MyAppState>(); //상태를 지속적으로 감시하고 변경될 때 UI도 자동으로 변경되는 메서드입니다
+    final pair = appState.current; //참조를 끊기 위해 새로 만든 파라미터
+
     return Scaffold(
-      body: Column(
-        children: [
-          const Text('A Random AWESOME Idea:'),
-          Text(appState.current.asLowerCase),
-          ElevatedButton(
-            onPressed: () {
-              debugPrint('button pressed!');
-              appState.getNext();
-            },
-            child: const Text('Next'),
-          )
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            BigCard(pair: pair), //위젯 추출한 부분
+            const SizedBox(height: 10.0),
+            ElevatedButton(
+              onPressed: () {
+                debugPrint('button pressed!');
+                appState.getNext();
+              },
+              child: const Text('Next'),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class BigCard extends StatelessWidget {
+  //추출된 위젯
+  const BigCard({
+    super.key,
+    required this.pair,
+  });
+
+  final WordPair pair;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context); //앱의 현재 테마를 요청
+    final style = theme.textTheme.displayMedium!.copyWith(
+      //앱의 글꼴 테마에 접근
+      color: theme.colorScheme.onPrimary, //기본색상으로 사용하기 적합한 색상을 정의
+    );
+
+    return Card(
+      color: theme.colorScheme.primary,
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Text(
+          pair.asLowerCase,
+          style: style,
+          semanticsLabel:
+              "${pair.first} ${pair.second}", //스크린리더에 적합한 시멘틱 콘텐츠로 재정의
+        ),
       ),
     );
   }
