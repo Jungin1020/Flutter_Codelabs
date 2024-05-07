@@ -34,6 +34,17 @@ class MyAppState extends ChangeNotifier {
     current = WordPair.random(); //새로운 랜덤단어 한 쌍을 만듭니다
     notifyListeners(); //MyApp에게 알림을 보내는 역할을 합니다
   }
+
+  List<WordPair> favorites = [];
+
+  void toggleFavorite() {
+    if (favorites.contains(current)) {
+      favorites.remove(current);
+    } else {
+      favorites.add(current);
+    }
+    notifyListeners();
+  }
 }
 
 class MyHomePage extends StatelessWidget {
