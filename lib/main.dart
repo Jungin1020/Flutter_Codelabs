@@ -1,5 +1,7 @@
 import 'package:english_words/english_words.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -52,6 +54,46 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: Row(
+        //Column으로 변경했을 때 에러는 안나지만 흰 화면만 뜸
+        children: [
+          SafeArea(
+            child: NavigationRail(
+              extended: false,
+              destinations: const [
+                NavigationRailDestination(
+                  icon: Icon(Icons.home),
+                  label: Text('Home'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.favorite),
+                  label: Text('Favorite'),
+                ),
+              ],
+              selectedIndex: 0,
+              onDestinationSelected: (value) {
+                debugPrint('selected: $value');
+              },
+            ),
+          ),
+          Expanded(
+            child: Container(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              child: const GeneratorPage(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class GeneratorPage extends StatelessWidget {
+  const GeneratorPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     final appState =
         context.watch<MyAppState>(); //상태를 지속적으로 감시하고 변경될 때 UI도 자동으로 변경되는 메서드입니다
     final pair = appState.current; //참조를 끊기 위해 새로 만든 파라미터
@@ -63,34 +105,32 @@ class MyHomePage extends StatelessWidget {
       icon = Icons.favorite_border;
     }
 
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BigCard(pair: pair), //위젯 추출한 부분
-            const SizedBox(height: 10.0),
-            Row(
-              mainAxisSize: MainAxisSize.min, //포함된 자식 컨텐트의 크기만큼 차지
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () {
-                    appState.toggleFavorite();
-                  },
-                  icon: Icon(icon),
-                  label: const Text('Like'),
-                ),
-                const SizedBox(width: 10.0),
-                ElevatedButton(
-                  onPressed: () {
-                    appState.getNext();
-                  },
-                  child: const Text('Next'),
-                ),
-              ],
-            )
-          ],
-        ),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          BigCard(pair: pair), //위젯 추출한 부분
+          const SizedBox(height: 10.0),
+          Row(
+            mainAxisSize: MainAxisSize.min, //포함된 자식 컨텐트의 크기만큼 차지
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  appState.toggleFavorite();
+                },
+                icon: Icon(icon),
+                label: const Text('Like'),
+              ),
+              const SizedBox(width: 10.0),
+              ElevatedButton(
+                onPressed: () {
+                  appState.getNext();
+                },
+                child: const Text('Next'),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }
