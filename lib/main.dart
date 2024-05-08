@@ -56,6 +56,13 @@ class MyHomePage extends StatelessWidget {
         context.watch<MyAppState>(); //상태를 지속적으로 감시하고 변경될 때 UI도 자동으로 변경되는 메서드입니다
     final pair = appState.current; //참조를 끊기 위해 새로 만든 파라미터
 
+    IconData icon; //로직을 이런 식으로도 쓸 수 있구나..
+    if (appState.favorites.contains(pair)) {
+      icon = Icons.favorite;
+    } else {
+      icon = Icons.favorite_border;
+    }
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -63,12 +70,24 @@ class MyHomePage extends StatelessWidget {
           children: [
             BigCard(pair: pair), //위젯 추출한 부분
             const SizedBox(height: 10.0),
-            ElevatedButton(
-              onPressed: () {
-                debugPrint('button pressed!');
-                appState.getNext();
-              },
-              child: const Text('Next'),
+            Row(
+              mainAxisSize: MainAxisSize.min, //포함된 자식 컨텐트의 크기만큼 차지
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () {
+                    appState.toggleFavorite();
+                  },
+                  icon: Icon(icon),
+                  label: const Text('Like'),
+                ),
+                const SizedBox(width: 10.0),
+                ElevatedButton(
+                  onPressed: () {
+                    appState.getNext();
+                  },
+                  child: const Text('Next'),
+                ),
+              ],
             )
           ],
         ),
