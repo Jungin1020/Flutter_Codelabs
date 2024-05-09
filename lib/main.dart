@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = const GeneratorPage();
         break;
       case 1:
-        page = const Placeholder();
+        page = const FavoritePage();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -189,6 +189,29 @@ class BigCard extends StatelessWidget {
               "${pair.first} ${pair.second}", //스크린리더에 적합한 시멘틱 콘텐츠로 재정의
         ),
       ),
+    );
+  }
+}
+
+class FavoritePage extends StatelessWidget {
+  const FavoritePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final appState = context.watch<MyAppState>();
+
+    if (appState.favorites.isEmpty) {
+      return const Center(child: Text('No favorites yet.'));
+    }
+
+    return ListView.builder(
+      itemCount: appState.favorites.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+            title: Text(appState.favorites[index].toString()),
+            leading: const Icon(Icons.favorite),
+            g);
+      },
     );
   }
 }
