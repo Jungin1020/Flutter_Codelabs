@@ -4,4 +4,12 @@ class User {
   final int id;
   final double height;
   final double weight;
+
+  User copyWith({int? id, double? height, double? weight}) {
+    return User(
+      id: id ?? this.id,
+      height: height ?? this.height,
+      weight: weight ?? this.weight,
+    );
+  }
 }

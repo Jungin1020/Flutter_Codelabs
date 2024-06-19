@@ -10,5 +10,11 @@ class UserNotifier extends _$UserNotifier {
     return User(id: 0, height: 0, weight: 0);
   }
 
-  void updateUser(User user) {}
+  void updateHeight(double height) {
+    state = state.copyWith(height: height);
+  }
+
+  void updateWeight(double weight) {
+    state = state.copyWith(weight: weight);
+  }
 }
