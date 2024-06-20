@@ -8,11 +8,11 @@ import '../shared/textfields.dart';
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
-  void _showDialog(BuildContext context) {
+  void _showDialog(BuildContext context, double bmi) {
     showDialog(
       context: context,
       builder: (context) {
-        return CustomDialog();
+        return CustomDialog(bmi: bmi);
       },
     );
   }
@@ -27,35 +27,46 @@ class HomeScreen extends ConsumerWidget {
 
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          children: [
-            const Text('BMI'),
-            RoundedTextFormField(
-              hintText: '키를 입력하세요',
-              controller: heightController,
-              onFieldSubmitted: (height) {
-                ref
-                    .read(userNotifierProvider.notifier)
-                    .updateHeight(double.parse(height));
-              },
-            ),
-            RoundedTextFormField(
-              hintText: '몸무게를 입력하세요',
-              controller: weightController,
-              onFieldSubmitted: (weight) {
-                ref
-                    .read(userNotifierProvider.notifier)
-                    .updateWeight(double.parse(weight));
-              },
-            ),
-            ElevatedButton(
-              onPressed: () {
-                _showDialog(context);
-              },
-              child: const Text('확인'),
-            ),
-            // Text('bmi : $bmi'),
-          ],
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            children: [
+              // const Text('BMI'),
+              Text(
+                'H',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              RoundedTextFormField(
+                hintText: '키를 입력하세요',
+                controller: heightController,
+                onFieldSubmitted: (height) {
+                  ref
+                      .read(userNotifierProvider.notifier)
+                      .updateHeight(double.parse(height));
+                },
+              ),
+              Text(
+                'W',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              RoundedTextFormField(
+                hintText: '몸무게를 입력하세요',
+                controller: weightController,
+                onFieldSubmitted: (weight) {
+                  ref
+                      .read(userNotifierProvider.notifier)
+                      .updateWeight(double.parse(weight));
+                },
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  _showDialog(context, bmi);
+                },
+                child: const Text('확인'),
+              ),
+              // Text('bmi : $bmi'),
+            ],
+          ),
         ),
       ),
     );
