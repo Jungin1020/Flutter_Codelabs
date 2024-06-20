@@ -1,4 +1,4 @@
-# BMI Calaulator
+# BMI Calculator
 
 Go-To-Learn 유병욱님
 
