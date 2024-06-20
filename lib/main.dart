@@ -21,8 +21,12 @@ class MyApp extends StatelessWidget {
               fontSize: 200,
               fontFamily: 'Pretendard',
               fontWeight: FontWeight.bold),
-          bodyMedium: TextStyle(
+          titleSmall: TextStyle(
               fontSize: 72,
+              fontFamily: 'Pretendard',
+              fontWeight: FontWeight.bold),
+          bodyMedium: TextStyle(
+              fontSize: 56,
               fontFamily: 'Pretendard',
               fontWeight: FontWeight.bold),
           bodySmall: TextStyle(
