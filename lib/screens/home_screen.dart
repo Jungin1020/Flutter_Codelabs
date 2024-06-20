@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_practice/providers/user_provider.dart';
+import 'package:riverpod_practice/shared/dialogs.dart';
 
 import '../shared/textfields.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
+
+  void _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return CustomDialog();
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,10 +49,12 @@ class HomeScreen extends ConsumerWidget {
               },
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                _showDialog(context);
+              },
               child: const Text('확인'),
             ),
-            Text('bmi : $bmi'),
+            // Text('bmi : $bmi'),
           ],
         ),
       ),
